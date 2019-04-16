@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}
+Registration
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid offset-5 my-5">
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input class="btn btn-primary" type="submit" value="Sign Up">
+    </form>
+</div>
+
+{% endblock %}

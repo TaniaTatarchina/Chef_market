@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Basket{% endblock %}
+{% block content %}
+
+<div class="container-fluid text-center">
+    {% if not orders.exists %}
+    <h2 class="m-5">У Вас нету ни одного заказа. Вы можете сделать заказ <a href="{% url 'dishes_list' %}">здесь</a></h2>
+    {% else %}
+    <div class="text-center my-4">
+        <h1>Ваш заказ</h1>
+    </div>
+    <div class="row offset-2">
+        {% for order in orders %}
+        <div class="col-3 m-3 card" style="width: 18rem;">
+          <img src="{{ order.dish.image.url }}" class="card-img-top mt-3" height="220px">
+          <div class="card-body">
+            <h4 class="card-title">{{ order.dish.name }}</h4>
+            <p class="card-text"><h5>Цена блюда: {{ order.dish.price|floatformat:"0" }} грн.</h5></p>
+            <form method="post"> {% csrf_token %}
+                <input type="hidden" value="{{ order.id }}" name="order_id">
+                <input type="submit" class="btn btn-primary mt-3" value="Удалить блюдо из заказа">
+            </form>
+          </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="row text-center">
+        <h3 class="col">Oбщая стоимость заказа: {{ total_price|floatformat:"0" }} грн.</h3>
+    </div>
+    <form method="post" action="{% url 'pay' %}"> {% csrf_token %}
+        <input class="btn btn-primary my-3" type="submit" value="Оплатить">
+    </form>
+    {% endif %}
+</div>
+{% endblock content %}

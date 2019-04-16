@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid section-top text-left">
+    <br>
+    <h1 class="font-weight-bolder">Готовое решение для вашей семьи <br> Готовить может каждый! </h1>
+    <div class="row">
+        <div class="col-6 text-left">
+        <h5>    Знаете ли Вы, что только 20% кулинарного времени уходит на готовку, остальные 80% на поиск рецептов,
+        на поиск, покупку и подготовку продуктов. Теперь у Вас есть возможность готовить с удовольствием,
+        из свежих и качественных продуктов, не тратя личное время на походы по магазинам. Закажите доставку
+        наших наборов продуктов для приготовления блюд дома и привнесите немного веселья и разнообразия в Вашу кухню!
+        Мы обещаем сделать процесс приготовления еды приятным и легким занятием</h5>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="text-center my-4">
+        <h1>Наше меню</h1>
+    </div>
+    <div class="row offset-2">
+    {% for dish in dishes_list %}
+        <div class="card col-3 m-3 text-center" style="width: 18rem;">
+          <img src="{{ dish.image.url }}" class="card-img-top mt-3" height="220px">
+          <div class="card-body">
+            <h4 class="card-title">{{ dish.name }}</h4>
+            <h5 class="col">Цена блюда: {{ dish.price|floatformat:"0" }}  грн.</h5>
+            <a href="{% url 'dish_detail' dish.id %}" class="btn btn-primary mt-3">Посмотреть рецепт</a>
+          </div>
+        </div>
+    {% endfor %}
+    </div>
+</div>
+{% endblock content %}
